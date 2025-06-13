@@ -1,6 +1,7 @@
 const buttons = document.querySelectorAll('#choices button');
 const scoreElem = document.getElementById('score');
 const resultElem = document.getElementById('result');
+const playAgainBtn = document.getElementById('play-again');
 
 let humanScore = 0;
 let computerScore = 0;
@@ -43,12 +44,25 @@ function playRound(humanChoice) {
     else finalMsg += "It's a tie!";
     resultElem.textContent += finalMsg;
     buttons.forEach(btn => btn.disabled = true);
+    playAgainBtn.style.display = 'inline';
   }
+}
+
+function resetGame() {
+  humanScore = 0;
+  computerScore = 0;
+  round = 0;
+  resultElem.textContent = '';
+  buttons.forEach(btn => btn.disabled = false);
+  playAgainBtn.style.display = 'none';
+  updateScoreboard();
 }
 
 buttons.forEach(button => {
   button.addEventListener('click', () => playRound(button.dataset.choice));
 });
+
+playAgainBtn.addEventListener('click', resetGame);
 
 updateScoreboard();
 
