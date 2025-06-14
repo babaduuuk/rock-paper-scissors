@@ -8,7 +8,13 @@ function getComputerChoice() {
 
 function getHumanChoice() {
   const choice = prompt("Enter rock, paper or scissors:");
-  return choice.toLowerCase();
+  if (!choice) return null;
+  const lower = choice.toLowerCase();
+  if (["rock", "paper", "scissors"].includes(lower)) {
+    return lower;
+  }
+  console.log("Invalid input. Please type rock, paper or scissors.");
+  return null;
 }
 
 function playGame() {
@@ -32,11 +38,15 @@ function playGame() {
     }
   }
 
-  for (let round = 1; round <= 5; round++) {
+  for (let round = 1; round <= 5; ) {
     const humanChoice = getHumanChoice();
+    if (!humanChoice) {
+      continue; // invalid input, do not count this round
+    }
     const computerChoice = getComputerChoice();
     playRound(humanChoice, computerChoice);
     console.log(`Score: You ${humanScore} | Computer ${computerScore}`);
+    round++;
   }
 
   if (humanScore > computerScore) {
